@@ -1,5 +1,6 @@
 <!--  -->
 <template>
+<!-- eslint-disable -->
   <div class="question">
     <top :topmsg="'满意度问卷'"></top>
     <ul class="queul">
@@ -62,7 +63,20 @@
         </van-radio-group>
       </li>
     </ul>
-    <button>提交</button>
+    <button class="submit">提交</button>
+    <div class="dialog" v-show="show">
+      <div class="form">
+        <p>
+          感谢您完成问卷,请填写以下资料， 将有机会获取我们送出的小礼品。           
+        </p>
+        <input type="text" placeholder="单位  名称"/>
+        <input type="text" placeholder="您的  姓名"/>
+        <input type="number" placeholder="您的  电话"/>
+        <button>
+          好的
+        </button>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -78,8 +92,19 @@ export default {
       icon: {
         normal: require("@/assets/images/check.png"),
         active: require("@/assets/images/checked.png")
-      }
+      },
+      show: false
     };
+  },
+  created() {
+    // this.wenjuan()
+  },
+  methods: {
+    wenjuan() {
+      this.$api.common.login().then(res => {
+        console.log(res);
+      });
+    }
   }
 };
 </script>
@@ -99,7 +124,7 @@ export default {
       }
     }
   }
-  button {
+  .submit {
     width: 100%;
     height: 88px;
     background: rgba(255, 99, 72, 1);
@@ -107,6 +132,50 @@ export default {
     line-height: 88px;
     text-align: center;
     margin-top: 520px;
+  }
+  .dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    .form {
+      position: absolute;
+      top: 350px;
+      left: 30px;
+      box-sizing: border-box;
+      padding: 20px;
+      text-align: center;
+      width: 690px;
+      height: 713px;
+      background: #fff;
+      border-radius: 16px;
+      p {
+        margin-bottom: 55px;
+      }
+      input {
+        margin-bottom: 32px;
+        width: 626px;
+        height: 88px;
+        background: rgba(241, 242, 246, 1);
+        border-radius: 44px;
+        padding-left: 30px;
+      }
+      button {
+        margin-top: 10px;
+        width: 380px;
+        height: 78px;
+        background: linear-gradient(
+          -90deg,
+          rgba(255, 99, 72, 1),
+          rgba(255, 159, 124, 1)
+        );
+        box-shadow: 0px 6px 16px 0px rgba(255, 159, 124, 0.6);
+        border-radius: 39px;
+        color: #fff;
+      }
+    }
   }
 }
 </style>

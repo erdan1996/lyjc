@@ -7,7 +7,7 @@ li{list-style:none}
 img{border:0;vertical-align:middle}
 table{border-collapse:collapse;border-spacing:0}
 p{word-wrap:break-word}
-body,html {font-size: 32px;font-family:SourceHanSansCN-Regular;width: 100%;height: 100%;}
+body,html {font-size: 32px;font-family:SourceHanSansCN-Regular;width: 100%;height: 100%;touch-action: none;}
 input, button, select, textarea {
   outline: none;
   -webkit-appearance: none;
@@ -17,11 +17,20 @@ input, button, select, textarea {
 .van-radio {
   display: flex;
   margin-bottom: 40px;
+  height: 40px;
+}
+.van-radio__icon, .van-radio__label {
+  line-height: 40px;
 }
 .van-radio__label {
   margin-left: 20px;
 }
 a{ 
   text-decoration:none; 
+  -webkit-tap-highlight-color:transparent;
 } 
 a:active { text-decoration:none;  } 
+a:link {text-decoration:none;} /* 未访问时的状态 */
+a:visited {text-decoration:none;} /* 已访问过的状态 */
+a:hover {text-decoration:none;} /* 鼠标移动到链接上时的状态 */
+a:active {text-decoration:none;} /* 鼠标按下去时的状态 */

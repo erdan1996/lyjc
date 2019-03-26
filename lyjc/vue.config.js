@@ -24,7 +24,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/api': {
-        target: 'https://www.xishidongshi.com',
+        target: 'http://kf0002.rungyun.cn/',
         ws: true,
         changeOrigin: true
       }

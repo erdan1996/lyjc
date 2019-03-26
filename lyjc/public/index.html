@@ -19,6 +19,10 @@
   <!-- built files will be auto injected -->
   <script>
     window.onload = function () {
+      // document.body.addEventListener('touchstart', function () { }); 
+      // document.body.addEventListener('touchend', function () { })
+      document.body.addEventListener('touchstart', function () { }, { passive: false })
+      document.body.addEventListener('touchend', function () { }, { passive: false })
       window.viewportUnitsBuggyfill.init({
         hacks: window.viewportUnitsBuggyfillHacks
       })

@@ -9,12 +9,8 @@
         <img src="../assets/images/pro.png" alt="" />
       </div>
       <div class="p">检测进度查询</div>
-      <input
-        type="number"
-        placeholder="请输入委托单号"
-        onkeyup="value=value.replace(/[^\d]/g,'')"
-      />
-      <button @click="chulai" class="queren">查询</button>
+      <input type="number" placeholder="请输入委托单号" />
+      <a class="queren hoverBg" @click="show = true">查询</a>
     </div>
     <div class="dialog" v-show="show">
       <div class="content">
@@ -31,12 +27,18 @@
 export default {
   data() {
     return {
-      show: true
+      show: false,
+      whether: false,
+      hoverIndex: 0
     };
   },
   methods: {
-    chulai() {
-      this.show = false;
+    touchstart() {
+      this.whether = true;
+    },
+    touchend() {
+      this.show = true;
+      this.whether = false;
     }
   }
 };
@@ -71,6 +73,7 @@ export default {
     border-radius: 20px;
     box-sizing: border-box;
     padding: 80px 70px;
+    text-align: center;
     .img {
       width: 176px;
       height: 173px;
@@ -97,19 +100,21 @@ export default {
       }
     }
     .queren {
+      display: inline-block;
       width: 380px;
       height: 78px;
+      line-height: 78px;
       background: linear-gradient(-90deg, #bcbcbc, #c2c2c2);
       box-shadow: 0px 6px 16px 0px rgba(250, 193, 172, 0.6);
       border-radius: 39px;
       color: #fff;
-      &:hover {
-        background: linear-gradient(
-          -90deg,
-          rgba(255, 99, 72, 1),
-          rgba(255, 159, 124, 1)
-        );
-      }
+    }
+    .hoverBg {
+      background: linear-gradient(
+        -90deg,
+        rgba(255, 99, 72, 1),
+        rgba(255, 159, 124, 1)
+      );
     }
   }
   .dialog {
