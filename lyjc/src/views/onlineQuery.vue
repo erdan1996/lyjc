@@ -9,7 +9,11 @@
         <img src="../assets/images/pro.png" alt="" />
       </div>
       <div class="p">检测进度查询</div>
-      <input type="number" placeholder="请输入委托单号" />
+      <input
+        type="number"
+        placeholder="请输入委托单号"
+        onkeyup="value=value.replace(/[^\d]/g,'')"
+      />
       <button @click="chulai" class="queren">查询</button>
     </div>
     <div class="dialog" v-show="show">

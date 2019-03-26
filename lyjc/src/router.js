@@ -31,6 +31,30 @@ export default new Router({
       name: "question",
       component: () =>
         import(/* webpackChunkName: "onlineQuery" */ "./views/question.vue")
+    },
+    {
+      path: "/contact",
+      name: "contact",
+      component: () =>
+        import(/* webpackChunkName: "onlineQuery" */ "./views/contact.vue")
+    },
+    {
+      path: "/schedule",
+      name: "schedule",
+      component: () =>
+        import(/* webpackChunkName: "onlineQuery" */ "./views/schedule.vue")
+    },
+    {
+      path: "/download",
+      name: "download",
+      component: () =>
+        import(/* webpackChunkName: "onlineQuery" */ "./views/download.vue")
+    },
+    {
+      path: "/position",
+      name: "position",
+      component: () =>
+        import(/* webpackChunkName: "onlineQuery" */ "./views/position.vue")
     }
   ]
 });

@@ -90,7 +90,7 @@ export default {
     li {
       width: 100%;
       height: 319px;
-      border-bottom: 1px solid #E6E7EB;
+      border-bottom: 1px solid #e6e7eb;
       box-sizing: border-box;
       padding: 20px 0 0px 20px;
       h4 {
