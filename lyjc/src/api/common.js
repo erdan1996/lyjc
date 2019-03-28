@@ -1,5 +1,5 @@
 import axios from "./http";
-import qs from "qs";
+// import qs from "qs";
 const common = {
   search(params) {
     return axios.get("/api/index/inquire", { params });

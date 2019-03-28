@@ -16,9 +16,21 @@
           </div>
         </li>
       </ul>
-      <ul class="botcontent">
-        <li v-for="(item, index) in lis" :key="index">
-          项目名称需全部显示果超过宽度要换行显
+      <ul class="botcontent" v-for="(item, index) in arr" :key="index">
+        <li>
+          {{ item.service_name }}
+        </li>
+        <li>
+          {{ item.grade }}
+        </li>
+        <li>
+          {{ item.range }}
+        </li>
+        <li>
+          {{ item.range }}
+        </li>
+        <li>
+          {{ item.price }}
         </li>
       </ul>
     </div>
@@ -26,6 +38,7 @@
 </template>
 <script>
 import top from "@/components/top.vue";
+import { Toast } from "vant";
 export default {
   components: {
     top
@@ -34,14 +47,19 @@ export default {
     return {
       spans: ["项目名称", "准确度等级", "测量范围", "所属领域", "价格"],
       lis: [0, 1, 2, 3, 4],
-      test: ''
+      test: "",
+      arr: []
     };
   },
   methods: {
     sousuo() {
-      this.$api.common.search({data: this.test}).then(res => {
-        console.log(res)
-      })
+      this.$api.common.search({ name: this.test }).then(res => {
+        if (res.data.code === 0) {
+          Toast.fail("该项目不存在");
+        } else {
+          this.arr = res.data.data;
+        }
+      });
     }
   }
 };
@@ -112,12 +130,13 @@ export default {
     border: 1px solid rgba(230, 231, 235, 1);
     text-align: center;
     li {
+      width: 151px;
       box-sizing: border-box;
       padding: 10px;
       overflow: hidden;
       height: 140px;
       font-size: 24px;
-      // line-height: 140px;
+      line-height: 140px;
       border-right: 1px solid rgba(230, 231, 235, 1);
       &:last-child {
         border: none;

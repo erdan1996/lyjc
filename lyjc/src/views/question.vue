@@ -2,6 +2,7 @@
 <template>
 <!-- eslint-disable -->
   <div class="question">
+    <!-- eslint-disable -->
     <top :topmsg="'满意度问卷'"></top>
     <ul class="queul">
       <li class="queli" v-for="(item,index) in ques" :key="index">
@@ -35,6 +36,8 @@
   </div>
 </template>
 <script>
+// eslint-disable
+import { Toast } from "vant";
 import top from "@/components/top.vue";
 export default {
   components: {
@@ -67,36 +70,58 @@ export default {
       this.$api.common.getques().then(res => {
         for (let i in res.data) {
           this.ques.push(res.data[i]);
-          this.sendsid.push(res.data[i].id)
+          this.sendsid.push(res.data[i].id);
         }
       });
     },
     submit() {
-      for (let i=0;i<this.ques.length;i++) {
-        this.sends.push(this.ques[i].question_options[this.ques[i].id].score)
+      if (!this.ques[0].question_options[this.ques[0].id]) {
+        Toast.fail("请选择答案");
+        return;
       }
-      console.log(this.sends)
-      for (let i = 0;i<this.sendsid.length;i++) {
-        this.qusetion.push(
-          {
-            id: this.sendsid[i],
-            score: this.sends[i]
-          }
-        ) 
+      if (!this.ques[1].question_options[this.ques[1].id]) {
+        Toast.fail("请选择答案");
+        return;
       }
-      this.show = true   
+      for (let i = 0; i < this.ques.length; i++) {
+        this.sends.push(this.ques[i].question_options[this.ques[i].id].score);
+      }
+      // eslint-disable-next-lin
+      for (let i = 0; i < this.sendsid.length; i++) {
+        this.qusetion.push({
+          id: this.sendsid[i],
+          score: this.sends[i]
+        });
+      }
+      this.show = true;
     },
     senddata() {
-      this.$api.common.sendques(
-        {
+      if (!this.company) {
+        Toast.fail("请填写公司");
+        return;
+      }
+      if (!this.name) {
+        Toast.fail("请填写姓名");
+        return;
+      }
+      if (!this.phone) {
+        Toast.fail("请填写手机号");
+        return;
+      }
+      this.$api.common
+        .sendques({
           company: this.company,
           contact: this.name,
           phone: this.phone,
           question: this.qusetion
-        }
-      ).then(res => {
-        console.log(this.res);
-      });  
+        })
+        .then(res => {
+          if (res.status === 200) {
+            Toast("提交成功");
+          } else {
+            Toast.fail(res.data.msg);
+          }
+        });
     }
   }
 };
@@ -123,7 +148,7 @@ export default {
     color: #fff;
     line-height: 88px;
     text-align: center;
-    margin-top: 520px;
+    margin-top: 320px;
   }
   .dialog {
     position: fixed;
@@ -156,8 +181,10 @@ export default {
       }
       div {
         margin-top: 10px;
+        margin-left: 150px;
         width: 380px;
         height: 78px;
+        line-height: 78px;
         background: linear-gradient(
           -90deg,
           rgba(255, 99, 72, 1),

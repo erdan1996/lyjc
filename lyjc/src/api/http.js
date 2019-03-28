@@ -27,7 +27,7 @@ const instance = axios.create({
 // 请求头
 instance.defaults.headers = {
   "Content-type": "application/json; charset=utf-8"
-}
+};
 // instance.defaults.headers.post["Content-type"] =
 //   "application/json; charset=utf-8";
 

@@ -5,7 +5,7 @@ import store from "./store";
 import fastClick from "fastclick";
 import api from "@/api/index";
 import "css/base.css";
-import { Dialog, Radio, RadioGroup, Cell, CellGroup } from "vant";
+import { Dialog, Radio, RadioGroup, Cell, CellGroup, Toast } from "vant";
 Vue.config.productionTip = false;
 fastClick.attach(document.body);
 Vue.prototype.$api = api;
@@ -15,6 +15,7 @@ Vue.use(Radio);
 Vue.use(Cell);
 Vue.use(CellGroup);
 Vue.use(RadioGroup);
+Vue.use(Toast);
 new Vue({
   router,
   store,

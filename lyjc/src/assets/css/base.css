@@ -34,3 +34,15 @@ a:link {text-decoration:none;} /* 未访问时的状态 */
 a:visited {text-decoration:none;} /* 已访问过的状态 */
 a:hover {text-decoration:none;} /* 鼠标移动到链接上时的状态 */
 a:active {text-decoration:none;} /* 鼠标按下去时的状态 */
+.van-toast--default {
+  min-width: 20vw !important;
+}
+/* 
+.van-toast {
+  min-height: 150px !important;
+  min-width:150px !important;
+} */
+/* .van-toast--text {
+  width: 50px !important;
+  height: 50px !important;
+} */
