@@ -4,27 +4,11 @@
   <div class="question">
     <top :topmsg="'满意度问卷'"></top>
     <ul class="queul">
-      <li class="queli">
-        <h4>1、满意度调查问卷</h4>
-        <van-radio-group v-model="radio">
-          <van-radio v-model="checked" name="1">
-            满意
-            <img
-              slot="icon"
-              slot-scope="props"
-              :src="props.checked ? icon.active : icon.normal"
-            />
-          </van-radio>
-          <van-radio v-model="checked" name="2">
-            非常满意
-            <img
-              slot="icon"
-              slot-scope="props"
-              :src="props.checked ? icon.active : icon.normal"
-            />
-          </van-radio>
-          <van-radio v-model="checked" name="3">
-            完美
+      <li class="queli" v-for="(item,index) in ques" :key="index">
+        <h4>{{item.title}}</h4>
+        <van-radio-group v-model="item.id">
+          <van-radio v-model="item1.checked" :name="i" v-for="(item1, i) in item.question_options" :key="i">
+            {{item1.content}}
             <img
               slot="icon"
               slot-scope="props"
@@ -32,49 +16,20 @@
             />
           </van-radio>
         </van-radio-group>
-      </li>
-      <li class="queli">
-        <h4>2、满意度调查问卷</h4>
-        <van-radio-group v-model="radio">
-          <van-radio v-model="checked" name="4">
-            满意
-            <img
-              slot="icon"
-              slot-scope="props"
-              :src="props.checked ? icon.active : icon.normal"
-            />
-          </van-radio>
-          <van-radio v-model="checked" name="5">
-            非常满意
-            <img
-              slot="icon"
-              slot-scope="props"
-              :src="props.checked ? icon.active : icon.normal"
-            />
-          </van-radio>
-          <van-radio v-model="checked" name="6">
-            完美
-            <img
-              slot="icon"
-              slot-scope="props"
-              :src="props.checked ? icon.active : icon.normal"
-            />
-          </van-radio>
-        </van-radio-group>
-      </li>
+      </li> 
     </ul>
-    <button class="submit">提交</button>
+    <button class="submit" @click="submit()">提交</button>
     <div class="dialog" v-show="show">
       <div class="form">
         <p>
           感谢您完成问卷,请填写以下资料， 将有机会获取我们送出的小礼品。           
         </p>
-        <input type="text" placeholder="单位  名称"/>
-        <input type="text" placeholder="您的  姓名"/>
-        <input type="number" placeholder="您的  电话"/>
-        <button>
+        <input type="text" placeholder="单位  名称" v-model="company"/>
+        <input type="text" placeholder="您的  姓名" v-model="name"/>
+        <input type="telephone" placeholder="您的  电话" v-model="phone"/>
+        <div @click="senddata">
           好的
-        </button>
+        </div>
       </div>
     </div>
   </div>
@@ -87,23 +42,64 @@ export default {
   },
   data() {
     return {
-      radio: "1",
+      radio: "",
       checked: true,
       icon: {
         normal: require("@/assets/images/check.png"),
         active: require("@/assets/images/checked.png")
       },
-      show: false
+      show: false,
+      company: "11",
+      name: "111",
+      phone: "18292987301",
+      res: {},
+      ques: [],
+      sends: [],
+      sendsid: [],
+      qusetion: []
     };
   },
   created() {
-    // this.wenjuan()
+    this.wenjuan();
   },
   methods: {
     wenjuan() {
-      this.$api.common.login().then(res => {
-        console.log(res);
+      this.$api.common.getques().then(res => {
+        for (let i in res.data) {
+          this.ques.push(res.data[i]);
+        }
+        
       });
+    },
+    submit() {
+      console.log(this.ques)
+      for (let i=0;i<this.ques.length;i++) {
+        this.sends.push(this.ques[i].question_options[this.ques[i].id].score)
+        this.sendsid.push(this.ques[i].id)
+      }
+      console.log(this.sendsid)
+      // console.log(item1)
+      for (let i = 0;i<this.sendsid.length;i++) {
+        this.qusetion.push(
+          {
+            id: this.sendsid[i],
+            score: this.sends[i]
+          }
+        ) 
+      }
+      this.show = true   
+    },
+    senddata() {
+      this.$api.common.sendques(
+        {
+          company: this.company,
+          contact: this.name,
+          phone: this.phone,
+          question: this.qusetion
+        }
+      ).then(res => {
+        console.log(this.res);
+      });  
     }
   }
 };
@@ -114,7 +110,6 @@ export default {
   .queul {
     li {
       width: 100%;
-      height: 319px;
       border-bottom: 1px solid #e6e7eb;
       box-sizing: border-box;
       padding: 20px 0 0px 20px;
@@ -162,7 +157,7 @@ export default {
         border-radius: 44px;
         padding-left: 30px;
       }
-      button {
+      div {
         margin-top: 10px;
         width: 380px;
         height: 78px;

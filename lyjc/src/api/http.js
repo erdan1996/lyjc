@@ -25,18 +25,21 @@ const instance = axios.create({
   baseURL: host
 });
 // 请求头
-instance.defaults.headers.post["Content-type"] =
-  "application/x-www-form-urlencoded";
+instance.defaults.headers = {
+  "Content-type": "application/json; charset=utf-8"
+}
+// instance.defaults.headers.post["Content-type"] =
+//   "application/json; charset=utf-8";
 
 // 每次请求有token携带Token
-instance.interceptors.request.use(
-  config => {
-    // const token = store.state.token
-    // token && (config.headers.Authorization = token)
-    return config;
-  },
-  error => Promise.error(error)
-);
+// instance.interceptors.request.use(
+//   config => {
+//     // const token = store.state.token
+//     // token && (config.headers.Authorization = token)
+//     return config;
+//   },
+//   error => Promise.error(error)
+// );
 // 响应拦截器
 instance.interceptors.response.use(
   // 请求成功

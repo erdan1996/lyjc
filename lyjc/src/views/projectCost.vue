@@ -2,8 +2,8 @@
 <template>
   <div class="procost">
     <top :topmsg="'项目费用'"></top>
-    <input type="text" placeholder="请输入项目名称" />
-    <div class="search">
+    <input type="text" v-model="test" />
+    <div class="search" @click="sousuo">
       <img src="@/assets/images/search.png" alt="" />
     </div>
     <div class="content">
@@ -33,8 +33,16 @@ export default {
   data() {
     return {
       spans: ["项目名称", "准确度等级", "测量范围", "所属领域", "价格"],
-      lis: [0, 1, 2, 3, 4]
+      lis: [0, 1, 2, 3, 4],
+      test: ''
     };
+  },
+  methods: {
+    sousuo() {
+      this.$api.common.search({data: this.test}).then(res => {
+        console.log(res)
+      })
+    }
   }
 };
 </script>

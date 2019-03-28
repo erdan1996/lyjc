@@ -1,11 +1,14 @@
 import axios from "./http";
 import qs from "qs";
 const common = {
-  login(params) {
-    return axios.get("/api/certification/index", { params });
+  search(params) {
+    return axios.get("/api/index/inquire", { params });
   },
-  refresh(params) {
-    return axios.post("/api/login/getSubscribe", qs.stringify(params));
+  getques(params) {
+    return axios.get("/api/Questionnaire/getNaires", { params });
+  },
+  sendques(params) {
+    return axios.post("/api/Questionnaire/nairesAnswer", params);
   }
 };
 
