@@ -67,18 +67,15 @@ export default {
       this.$api.common.getques().then(res => {
         for (let i in res.data) {
           this.ques.push(res.data[i]);
+          this.sendsid.push(res.data[i].id)
         }
-        
       });
     },
     submit() {
-      console.log(this.ques)
       for (let i=0;i<this.ques.length;i++) {
         this.sends.push(this.ques[i].question_options[this.ques[i].id].score)
-        this.sendsid.push(this.ques[i].id)
       }
-      console.log(this.sendsid)
-      // console.log(item1)
+      console.log(this.sends)
       for (let i = 0;i<this.sendsid.length;i++) {
         this.qusetion.push(
           {
