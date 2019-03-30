@@ -2,12 +2,12 @@
 <template>
   <div class="down">
     <top :topmsg="'资质下载'"></top>
-    <div class="download"></div>
+    <div class="download" v-html="result.content"></div>
     <div class="river"></div>
     <ul class="href">
-      <li>
-        标题
-        <span>下载附件</span>
+      <li v-for="(item, index) in result.list" :key="index">
+        {{ item.name }}
+        <a :href="item.url">下载附件</a>
       </li>
     </ul>
   </div>
@@ -17,19 +17,36 @@ import top from "@/components/top.vue";
 export default {
   components: {
     top
+  },
+  data() {
+    return {
+      result: {},
+      list: {}
+    };
+  },
+  created() {
+    this.down();
+  },
+  methods: {
+    down() {
+      this.$api.common.getdown().then(res => {
+        this.result = res.data;
+      });
+    }
   }
 };
 </script>
 <style lang="less" scoped>
 .down {
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  overflow-y: scroll;
   .download {
     box-sizing: border-box;
     padding: 0 20px;
     margin-top: 20px;
     min-height: 900px;
-    overflow: hidden;
+    // overflow: hidden;
   }
   .river {
     width: 100%;
@@ -44,7 +61,7 @@ export default {
       line-height: 109px;
       box-sizing: border-box;
       padding: 0 40px;
-      span {
+      a {
         float: right;
         color: #ff4757;
       }

@@ -9,8 +9,8 @@
         <img src="../assets/images/pro.png" alt="" />
       </div>
       <div class="p">检测进度查询</div>
-      <input type="number" placeholder="请输入委托单号" />
-      <a class="queren hoverBg" @click="show = true">查询</a>
+      <input type="telephone" placeholder="请输入委托单号" v-model="danhao" />
+      <a class="queren hoverBg" @click="senddanhao">查询</a>
     </div>
     <div class="dialog" v-show="show">
       <div class="content">
@@ -29,7 +29,10 @@ export default {
     return {
       show: false,
       whether: false,
-      hoverIndex: 0
+      hoverIndex: 0,
+      danhao: "3005235",
+      page: 1,
+      pageSize: 10
     };
   },
   methods: {
@@ -39,6 +42,24 @@ export default {
     touchend() {
       this.show = true;
       this.whether = false;
+    },
+    senddanhao() {
+      this.$api.common
+        .getjindu({
+          number: this.danhao,
+          pageNo: this.page,
+          pageSize: this.pageSize
+        })
+        .then(res => {
+          if (!res.data.data.list) {
+            this.show = true;
+          } else {
+            this.$router.push({
+              name: "schedule",
+              params: { id: this.danhao }
+            });
+          }
+        });
     }
   }
 };

@@ -1,7 +1,7 @@
 <!--  -->
 <template>
   <div class="top">
-    <div class="img">
+    <div class="img" v-show="show" @click="back">
       <img src="../assets/images/left.png" alt="" />
     </div>
     <h3>{{ topmsg }}</h3>
@@ -18,6 +18,16 @@ export default {
   },
   data() {
     return {};
+  },
+  computed: {
+    show() {
+      return this.$route.path === "/schedule" ? true : false
+    }
+  },
+  methods: {
+    back() {
+      this.$router.push({ path: '/' })
+    }
   }
 };
 </script>

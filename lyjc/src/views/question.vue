@@ -1,7 +1,7 @@
 <!--  -->
 <template>
 <!-- eslint-disable -->
-  <div class="question">
+  <div class="question" v-show="ques.length">
     <!-- eslint-disable -->
     <top :topmsg="'满意度问卷'"></top>
     <ul class="queul">
@@ -104,8 +104,16 @@ export default {
         Toast.fail("请填写姓名");
         return;
       }
-      if (!this.phone) {
-        Toast.fail("请填写手机号");
+      if (this.phone.length == 0) {
+        Toast("请填写有效的手机号");
+        return;
+      }
+      if (this.phone.length != 11) {
+        Toast("请填写有效的手机号");
+        return;
+      }
+      if (!/^1[3|4|5|7|8][0-9]\d{8,11}$/.test(this.phone)) {
+        Toast("请填写手机号");
         return;
       }
       this.$api.common
@@ -116,8 +124,13 @@ export default {
           question: this.qusetion
         })
         .then(res => {
+          // alert(res.data)
           if (res.status === 200) {
             Toast("提交成功");
+            this.qusetion = [];
+            this.show = false;
+            // window.close();
+            WeixinJSBridge.call('closeWindow');
           } else {
             Toast.fail(res.data.msg);
           }
